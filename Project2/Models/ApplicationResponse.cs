@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Project2.Models
-{
+{   //Create the variables
     public class ApplicationResponse
     {
         [Key]
@@ -19,8 +19,12 @@ namespace Project2.Models
 
         [Required]
         public int Quadrant { get; set; }
-        public string Category { get; set; }
         public bool Completed { get; set; }
+
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
+
+
 
     }
 }

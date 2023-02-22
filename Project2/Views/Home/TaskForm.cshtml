@@ -4,7 +4,7 @@
 }
 
 @model Project2.Models.ApplicationResponse
-
+<!--Form to enter the data for a task-->
 <div>
     <form method="post">
         <label>Task (Required)</label>
@@ -14,11 +14,12 @@
         <label>Quadrant (Required)</label>
         <input asp-for="Quadrant" /><br />
         <label>Category</label>
-        <select asp-for="Category">
-            <option value="home">Home</option>
-            <option value="school">School</option>
-            <option value="work">Work</option>
-            <option value="church">Church</option>
+        <select asp-for="CategoryID">
+            <option value="">Select a Category</option>
+            @foreach (Category c in ViewBag.Categories)
+            {
+            <option value="@c.CategoryID">@c.CategoryName</option>
+            }
         </select><br />
         <label>Completed</label>
         <select asp-for="Completed">

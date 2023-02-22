@@ -46,21 +46,32 @@ namespace Project2.Controllers
         [HttpGet]
         public IActionResult TaskForm()
         {
+            ViewBag.Categories = quadrantContext.Categories.ToList();
             return View();
         }
 
         [HttpPost]
         public IActionResult TaskForm(ApplicationResponse ar)
         {
-            quadrantContext.Add(ar);
-            quadrantContext.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                quadrantContext.Add(ar);
+                quadrantContext.SaveChanges();
 
-            return View("Confirmation", ar);
+                return View("Confirmation", ar);
+            }
+            else
+            {
+                ViewBag.Categories = quadrantContext.Categories.ToList();
+                return View();
+            }
+          
         }
 
         [HttpGet]
         public IActionResult Edit(int taskid)
         {
+            ViewBag.Categories = quadrantContext.Categories.ToList();
             var task = quadrantContext.Responses.Single(x => x.TaskID == taskid);
             return View("TaskForm", task);
         }
@@ -73,6 +84,7 @@ namespace Project2.Controllers
             return RedirectToAction("Quadrant");
         }
 
+        //Find the related task to the id that is returned.
         [HttpGet]
         public IActionResult Delete(int taskid)
         {
@@ -80,6 +92,7 @@ namespace Project2.Controllers
             return View(task);
         }
 
+        //Delete task out of the database
         [HttpPost]
         public IActionResult Delete(ApplicationResponse ar)
         {
@@ -89,7 +102,7 @@ namespace Project2.Controllers
             return RedirectToAction("Quadrant");
         }
 
-     
+        //Changes the completed field on the application response object
         public IActionResult Complete(int taskid)
         {
             var task = quadrantContext.Responses.Single(x => x.TaskID == taskid);
